@@ -41,10 +41,10 @@ export default function Menu2 () {
                   <Button variant="outline-success">Buscar</Button>
                 </Form>
                 <Nav className="justify-content-end flex-grow-1 pe-3 mt-4">
-                  <Nav.Link><Link to={'/'}>Página Inicial</Link></Nav.Link>
-                  <Nav.Link><Link to={'/funcionarios'}>Cadastro de Funcionários</Link></Nav.Link>
-                  <Nav.Link><Link to={'/produtos'}>Cadastro de Produtos</Link></Nav.Link>
-                  <Nav.Link><Link to={'/fornecedores'}>Cadastro de Fornecedores</Link></Nav.Link>
+                  <Link to={'/'}>Página Inicial</Link>
+                  <Link to={'/funcionario'}>Cadastro de Funcionários</Link>
+                  <Link to={'/produto'}>Cadastro de Produtos</Link>
+                  <Link to={'/fornecedor'}>Cadastro de Fornecedores</Link>
                   <NavDropdown
                     title="Departamentos"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}

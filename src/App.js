@@ -31,9 +31,9 @@ const [usuario, setUsuario] = useState({
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<TelaHome />} />
-              <Route path="/funcionarios" element={<TelaCadastroFuncionarios />} />
-              <Route path="/produtos" element={<TelaCadastroProduto />} />
-              <Route path="/fornecedores" element={<TelaCadastroFornecedores />} />
+              <Route path="/funcionario" element={<TelaCadastroFuncionarios />} />
+              <Route path="/produto" element={<TelaCadastroProduto />} />
+              <Route path="/fornecedor" element={<TelaCadastroFornecedores />} />
               <Route path="/*" element={<Tela404 />} />
             </Routes>
           </BrowserRouter> 
