@@ -1,13 +1,31 @@
 import { Button, Table } from "react-bootstrap";
+import urlBaseFuncionario from "../../utilitarios/configuracoes";
 
 export default function TabelaCadFuncionarios(props) {
-
-  function excluirFuncionario(cpf){
-    const novaLista = props.listaFuncionarios.filter(funcionario => funcionario.cpf !== cpf);
-    props.setListaFuncionarios(novaLista);
+  
+  function excluirFuncionario(id) {
+    fetch(urlBaseFuncionario, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id })
+    })
+      .then(resposta => resposta.json())
+      .then((dados) => {
+        if (dados.status) {
+          const novaLista = props.listaFuncionarios.filter(
+            (funcionario) => funcionario.id !== id
+          );
+          props.setListaFuncionarios(novaLista);
+        } else {
+          alert(dados.mensagem);
+        }
+      })
+      .catch((erro) => {
+        alert("Não foi possível conectar ao backend. erro: " + erro.message);
+      });
   }
 
-  function alterarFuncionario(funcionario){
+  function alterarFuncionario(funcionario) {
     props.setFuncionarioSelecionado(funcionario);
     props.setModoEdicao(true);
     props.setExibirTabela(false);
@@ -48,11 +66,14 @@ export default function TabelaCadFuncionarios(props) {
                 <td>{funcionario.telefone}</td>
                 <td>{funcionario.email}</td>
                 <td>
-                  <Button 
+                  <Button
                     variant="danger"
-                    onClick={()=>{
-                      excluirFuncionario(funcionario.cpf)
-                    }}>
+                    onClick={() => {
+                      if(window.confirm("Deseja excluir o funcionário?")){
+                        excluirFuncionario(funcionario.id);
+                      }
+                    }}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -63,13 +84,15 @@ export default function TabelaCadFuncionarios(props) {
                     >
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                    </svg> excluir
+                    </svg>{" "}
+                    excluir
                   </Button>{" "}
-                  <Button 
-                    onClick={()=>{
+                  <Button
+                    onClick={() => {
                       alterarFuncionario(funcionario);
                     }}
-                    variant="primary">
+                    variant="primary"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -83,7 +106,8 @@ export default function TabelaCadFuncionarios(props) {
                         fill-rule="evenodd"
                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
                       />
-                    </svg> editar
+                    </svg>{" "}
+                    editar
                   </Button>
                 </td>
               </tr>
@@ -93,4 +117,5 @@ export default function TabelaCadFuncionarios(props) {
       </Table>
     </div>
   );
+
 }

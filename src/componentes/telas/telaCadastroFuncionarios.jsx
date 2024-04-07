@@ -2,16 +2,16 @@ import FormCadFuncionarios from "../formularios/formCadFuncionarios";
 import TabelaCadFuncionarios from "../tabelas/tabelaCadFuncionarios";
 import Pagina from "../templates/pagina";
 import { useState, useEffect } from "react";
+import urlBaseFuncionario from "../../utilitarios/configuracoes";
 
 export default function TelaCadastroFuncionarios(props) {
-  const urlBackend = "http://localhost:4000/funcionario";
   const [exibirTabela, setExibirTabela] = useState(true);
   const [listaFuncionarios, setListaFuncionarios] = useState([]);
   const [funcionarioSelecionado, setFuncionarioSelecionado] = useState({});
   const [modoEdicao, setModoEdicao] = useState(false);
 
   useEffect(() => {
-    fetch(urlBackend,{method: "GET"})
+    fetch(urlBaseFuncionario,{method: "GET"})
     .then(resposta => resposta.json())
     .then(funcionarios => setListaFuncionarios(funcionarios));
   }, []);
